@@ -1,0 +1,183 @@
+syntax on
+
+call pathogen#infect()
+
+set t_Co=256
+set background=dark
+color molokai
+
+set showcmd  " display incomplete commands
+if has("autocmd")
+    filetype on
+    filetype indent on
+    filetype plugin on
+endif
+
+" Prefer ISO8859-7 over ISO8859-1:
+set fileencodings-=latin1
+set fileencodings+=greek
+" Path setting for finding files
+"
+set path+=**,
+
+" swap/backup files
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+
+" -----------------------------------------------------------------------------
+"  Text Format
+" -----------------------------------------------------------------------------
+set autoindent
+set smartindent     " go with smartindent if there is no plugin indent file
+set nowrap          " don't wrap lines
+set softtabstop=2   " tab space
+set tabstop=4
+set expandtab
+set nosmarttab
+set formatoptions+=n " support for numbered/bullet lists
+
+
+function SetupWrapping()
+  set wrap
+  set wrapmargin=2
+  set textwidth=80
+endfunction
+
+" -----------------------------------------------------------------------------
+"  User Interface
+" -----------------------------------------------------------------------------
+set showcmd
+set number            " line numbers
+set foldenable foldcolumn=2 foldlevelstart=99 foldmethod=syntax
+set ruler
+set cursorline
+set wildmenu " way cooler command line mode completion
+set wildmode=list:longest " complete like shell
+" ignore these files for auto...
+set wildignore+=*.o,+=*.obj,+=*.bak,+=*.exe,+=*~,+=*.hi
+set backspace=2 " allow backspacing over everything in insert mode
+set mouse=a " enable mouse in terminal
+set showmatch " brackets/braces that is
+set mat=5 " duration to show matching brace (1/10 sec)
+set scrolloff=3 " lines to always seeable when scrolling
+set laststatus=1 " enable status line always
+
+
+" -----------------------------------------------------------------------------
+"  Searching
+" -----------------------------------------------------------------------------
+set incsearch  " do incremental searching
+set hlsearch
+set ignorecase " make this default, turn on case in search with /<search>\C/
+" type small case will search case independent, type mixed case will use exact
+set smartcase
+
+
+" -----------------------------------------------------------------------------
+"  Specail File Cases
+" -----------------------------------------------------------------------------
+if has("autocmd")
+" In Makefiles, use real tabs, not tabs expanded to spaces
+  au FileType make set noexpandtab
+
+" Make sure all mardown files have the correct filetype set and setup wrapping
+  au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown | call s:setupWrapping()
+
+" Treat JSON files like JavaScript
+  au BufNewFile,BufRead *.json set ft=javascript
+
+" make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+  au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+
+" Remember last location in file, but not for commit messages.
+" see :help last-position-jump
+  au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g`\"" | endif
+endif
+
+
+" -----------------------------------------------------------------------------
+"  Mapping
+" -----------------------------------------------------------------------------
+" setup mapleader
+let mapleader=","
+
+imap jj <Esc>
+
+map <silent> bb :ToggleBookmark<CR>
+map <silent> bn :NextBookmark<CR>
+map <silent> bp :PreviousBookmark<CR>
+
+" map - to end of line, _ to start
+noremap - ^
+noremap _ $
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+\ | wincmd p | diffthis
+
+" Better way to enter command line (get rid of pointless shift)
+nnoremap ; :
+cnoremap ; <C-C>
+
+"""---------------------
+"""# New Movement Keys #
+"""---------------------
+
+"" normally nothing
+noremap <C-k> 2<C-Y>
+noremap <C-j> 2<C-E>
+
+"""-------------------------------------
+"""# File/Window/Buffer Managment Keys #
+"""-------------------------------------
+
+"" quick file browse mapping
+map <Leader>e :e %:p:h<CR>
+map <Leader>E :lcd %:p:h<CR>
+
+"" new tab
+""nmap <Leader>t :tabe %:p:h<CR>
+nmap <Leader>T :tabe .<CR>
+nmap <Leader>n :tabnew<CR>
+
+"" Give tab cycling nicer keys (normally these just do same as j & k)
+map <Leader><Tab> :tabnext<CR>
+map <Leader><S-Tab> :tabprevious<CR>
+
+"" close window
+map <Leader>q :q<CR>
+"" quit vim
+map <Leader>Q :qall!<CR>
+
+
+" -----------------------------------------------------------------------------
+"  Whitespace
+" -----------------------------------------------------------------------------
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+"Highlight more than 80 chars
+if exists('+colorcolumn')
+  set colorcolumn=80
+else
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
+
+" ---------------
+"  # LLVM Syntax #
+" ---------------
+augroup filetype
+	au! BufRead,BufNewFile *.ll     set filetype=llvm
+augroup END
+
+
+augroup filetype
+  au! BufRead,BufNewFile *.td     set filetype=tablegen
+augroup END
