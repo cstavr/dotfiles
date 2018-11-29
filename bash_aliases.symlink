@@ -1,4 +1,4 @@
-alias less='less -FRSX'
+alias less='less -FRSX -j5'
 alias ll='ls -l'
 alias v='vim'
 
