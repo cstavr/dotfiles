@@ -199,3 +199,22 @@ if ! has('gui_running')
     augroup END
 endif
 let g:Powerline_colorscheme="solarized256"
+
+" Git commit message
+function! CommitMessages()
+    set spelllang=en_us spell
+    let g:git_ci_msg_user = substitute(system("git config --get user.name"),
+              \ '\n$', '', '')
+    let g:git_ci_msg_email = substitute(system("git config --get user.email"),
+              \ '\n$', '', '')
+
+    nmap S oSigned-off-by: <C-R>=printf("%s <%s>",
+		\ g:git_ci_msg_user, g:git_ci_msg_email)<CR><CR><ESC>
+    nmap R oReviewed-by: <C-R>=printf("%s <%s>",
+		\ g:git_ci_msg_user, g:git_ci_msg_email)<CR><ESC>
+endf
+
+au FileType	gitcommit call CommitMessages()
+
+autocmd BufWinEnter COMMIT_EDITMSG,*.diff,*.patch,*.patches.txt call CommitMessages()
+autocmd Filetype gitcommit,mail,rst setlocal spell spelllang=en_us,el
