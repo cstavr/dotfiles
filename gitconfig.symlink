@@ -12,18 +12,22 @@
 	ui = 1
 [merge]
 	tool = meld
-	[alias]
+[alias]
 	ci = commit
 	co = checkout
-	cp = cherry-pick
-	st = status -sb
+	br = branch
+	st = status
+	sh = show
+	sn = show --numstat
+	ca = commit --amend
 	fixup = commit --amend --no-edit
 	undo = reset --mixed HEAD~1
 	amend = commit -a --amend
 
 	tree = log --graph --decorate --pretty=oneline --abbrev-commit
-	ls = log --graph --decorate --pretty=oneline --abbrev-commit --date=relative --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset by %C(yellow)%ae%Creset'
-	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+	ls = log --graph --pretty=format:'%C(yellow)%h%Creset%C(red)%d%Creset %s %C(green)(%ad)%Creset %C(blue)[%an]%Creset' --date=relative
+	lsl = log --graph --pretty=format:'%C(yellow)%h%Creset%C(red)%d%Creset %s %C(green)(%ad)%Creset %C(blue)[%an]%Creset' --date=relative --numstat
+	lsc = log --graph --pretty=format:'%C(yellow)%h%Creset%C(red)%d%Creset %s %C(green)(%cd)%Creset %C(blue)[%cn]%Creset' --date=relative
 
 	changes = diff --name-status
 	diffstat = diff --stat
