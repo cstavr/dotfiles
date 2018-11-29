@@ -1,0 +1,51 @@
+[user]
+	name = Christos Stavrakakis
+	email = stavr.chris@gmail.com
+[core]
+	pager = less -FRSX
+	editor = vim
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	ui = 1
+[merge]
+	tool = meld
+	[alias]
+	ci = commit
+	co = checkout
+	cp = cherry-pick
+	st = status -sb
+	fixup = commit --amend --no-edit
+	undo = reset --mixed HEAD~1
+	amend = commit -a --amend
+
+	tree = log --graph --decorate --pretty=oneline --abbrev-commit
+	ls = log --graph --decorate --pretty=oneline --abbrev-commit --date=relative --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset by %C(yellow)%ae%Creset'
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+
+	changes = diff --name-status
+	diffstat = diff --stat
+	cached = diff --cached
+
+	rlog = log --patch --reverse
+	pl = log --patch
+	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+
+	grep = grep -Ii
+# Find file
+	f = "!git ls-files | grep -i"
+# List aliases
+	la = "!git config -l | grep alias | cut -c 7-"
+# Count commits
+	count = shortlog -sn
+[diff]
+	tool = meld
+[help]
+	autocorrect = 1
+[credential]
+	helper = cache
+	timeout = 120000
+[push]
+	default = current

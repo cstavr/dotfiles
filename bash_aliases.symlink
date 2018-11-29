@@ -1,4 +1,9 @@
 alias less='less -FRSX'
-alias x='exit'
-alias t='gnome-terminal --hide-menubar'
+alias ll='ls -l'
 alias v='vim'
+
+alias gd='git diff'
+alias gc='git commit'
+alias gs='git status'
+
+alias now='date +"%d_%m_%Y"'

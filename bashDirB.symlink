@@ -15,7 +15,7 @@
 # By default DirB will have the shell echo the current working directory out
 # to the title bars of Xterm windows.  To disable this behavior, comment
 # out the next line.
-# PS1="\[\033]0;\w\007\]\t \!> "
+#PS1="\[\033]0;\w\007\]\t \!> "
 
 # If the repository of bookmarks does not exist, create it
 if  [ ! -e ~/.DirB ]
@@ -145,4 +145,3 @@ function d () {
         false
     fi
 }
-

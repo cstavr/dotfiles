@@ -60,6 +60,7 @@ myWorkSpaces = ["1:code1", "2:code2", "3:code3", "4:web", "5:im", "6:logs"] ++ m
 myManageHook = composeAll
     [ className =? "Iceweasel" --> doShift "4:web"
     , className =? "Icedove" --> doShift "4:web"
+    , className =? "google-chrome" --> doShift "4:web"
     , resource =? "desktop_window" --> doIgnore
     , className =? "Galculator" --> doFloat
     , className =? "Gimp" --> doFloat
@@ -67,12 +68,11 @@ myManageHook = composeAll
     , resource =? "gpicview" --> doFloat
     , resource =? "kdesktop" --> doIgnore
     , className =? "MPlayer" --> doFloat
-    , className =? "skype" --> doFloat
-    , className =? "skype" --> doShift "5:im"
+    , className =? "Skype" --> doShift "5:im"
     , className =? "Xchat" --> doShift "5:im"
     , className =? "Pidgin" --> doShift "5:im"
     --, className =? "Audacious2" --> doShift "5:media"
-    , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
+    , isFullscreen --> doFullFloat]
 
 -----------------------------------------------------------------------
 -- Layouts

@@ -10,11 +10,17 @@ altscreen on
 defscrollback 10000
 defutf8 on
 nonblock on
-term screen-256color
+
+attrcolor b ".I"
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+defbce "on"
+
 termcapinfo xterm*|Eterm|mlterm|rxvt 'hs:ts=\E]0;:fs=\007:ds=\E]0;screen\007'
 
 hardstatus alwayslastline
-hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+hardstatus string '%{= kG}[%{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+bind b eval "writebuf" "exec sh -c 'pbcopy < /tmp/screen-exchange'"
 
 bind 'q' quit
 # use F8 to turn the status bar off at the bottom of the screen
@@ -28,10 +34,11 @@ bindkey -k F2 next
 bindkey "^[Od" prev # ctrl-left
 bindkey "^[Oc" next # ctrl-right
 
-
 screen -t bash
 screen -t bash
 screen -t bash
-focus
 
 select 0
+
+
+

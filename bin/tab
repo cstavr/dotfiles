@@ -1,0 +1,14 @@
+#!/bin/bash
+osascript  <<EOF
+tell application "iTerm"
+activate
+set myterm to (current terminal)
+tell myterm
+tell application "System Events" to keystroke "d" using command down
+tell application "System Events" to keystroke "d" using command down
+tell application "System Events" to keystroke "D" using command down
+tell application "System Events" to key code 123 using {command down, option down}
+tell application "System Events" to key code 123 using {command down, option down}
+end tell
+end tell
+EOF
