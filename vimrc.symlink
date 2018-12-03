@@ -30,7 +30,9 @@ endfunction
 "  Text Format
 " -----------------------------------------------------------------------------
 
+syntax on
 filetype plugin indent on
+
 set autoindent
 set smartindent			" go with smartindent if there is no plugin indent file
 
