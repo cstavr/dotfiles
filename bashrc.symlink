@@ -129,7 +129,7 @@ BLINK=$(tput blink)
 REVERSE=$(tput smso)
 UNDERLINE=$(tput smul)
 
-git_ps1 ()
+__git_ps1 ()
 {
     local b="$(git symbolic-ref HEAD 2>/dev/null)";
     if [ -n "$b" ]; then
@@ -138,7 +138,7 @@ git_ps1 ()
 }
 
 # Bash prompt
-PS1='\[${CYAN}\]\u::\w\[${GREEN}\] $(__git_ps1 "(%s)")\[${CYAN}\] >>\[${WHITE}\] '
+PS1='\[${CYAN}\]\u::\w\[${GREEN}\]$(__git_ps1 "(%s)")\[${CYAN}\] >>\[${WHITE}\] '
 
 # Set default editor
 export EDITOR=$(which vim)
@@ -153,6 +153,10 @@ source $HOME/.bashDirB
 
 # Add dotfiles bin to path
 export PATH=$HOME/dotfiles/bin:$PATH
+
+# Bash colors
+export CLICOLOR=1
+export LSCOLORS='gxfxcxdxbxGxDxabagacad'
 
 #
 # PIP Configuration
