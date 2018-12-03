@@ -1,10 +1,12 @@
 source ~/.bashrc
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+if [ -f "$(which brew)" ]; then
+	if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+		. $(brew --prefix)/etc/bash_completion
+	fi
 fi
 
-if [ -f `which powerline-daemon` ]; then
+if [ -f "$(which powerline-daemon)" ]; then
 	powerline-daemon -q
 	POWERLINE_BASH_CONTINUATION=1
 	POWERLINE_BASH_SELECT=1
