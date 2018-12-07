@@ -3,7 +3,8 @@ call pathogen#infect()
 
 " Colors
 set t_Co=256
-colorscheme molokai
+" colorscheme molokai
+colorscheme solarized
 set background=dark
 
 " swap/backup files
